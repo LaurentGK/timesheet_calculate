@@ -1,57 +1,56 @@
-# React + TypeScript + Vite
+# 工时计算工具 (Timesheet Calculator)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+这是一个基于 Web 的工时计算应用，用于自动解析 Excel 考勤表并计算白班与夜班工时。
 
-Currently, two official plugins are available:
+## 功能特点
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **自动计算**：自动识别白班（19:00 前）和夜班（19:00 后），支持跨天班次。
+- **即时预览**：上传文件后立即展示每日明细和月度汇总。
+- **数据导出**：支持将计算结果导出为 Excel 文件。
+- **纯前端运行**：所有数据处理均在浏览器中完成，数据安全且无需配置后端。
 
-## Expanding the ESLint configuration
+## 快速开始
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. 环境准备
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+确保您的电脑已安装 [Node.js](https://nodejs.org/) (建议版本 v18+)。
+
+### 2. 安装依赖
+
+在项目根目录下打开终端，运行：
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 3. 启动应用
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+运行以下命令启动开发服务器：
 
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm run dev
 ```
+
+启动后，按住 `Ctrl` 点击终端显示的链接（通常是 `http://localhost:5173`）即可在浏览器中打开。
+
+## 使用说明
+
+1.  **准备 Excel 文件**：
+    *   确保您的考勤表格式包含“日期”、“上班时间”、“下班时间”等列。
+    *   您可以参考项目根目录下的 `template-timesheet.xlsx` 模板。
+
+2.  **上传文件**：
+    *   将 Excel 文件拖拽到网页的上传区域，或点击上传区域选择文件。
+
+3.  **查看结果**：
+    *   **每日明细**：查看每一天的白班、夜班和总工时。
+    *   **月度汇总**：查看当月的总工时统计。
+
+4.  **导出报表**：
+    *   点击“导出 Excel”按钮下载包含计算结果的详细报表。
+
+## 核心规则
+
+*   **白班**：00:00 - 19:00
+*   **夜班**：19:00 - 24:00 (次日 00:00)
+*   **跨天处理**：如果下班时间小于上班时间，系统会自动识别为次日下班。
